@@ -41,7 +41,7 @@ let write_line (sl : string list) =
     (* Write the new line to the output file *)
     output_string oc new_string;
     flush oc;
-    print_string new_string;
+    (*print_string new_string;*)
 in
 
 (* Write the headers to the file *)
