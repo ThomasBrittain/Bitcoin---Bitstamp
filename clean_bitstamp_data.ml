@@ -1,7 +1,7 @@
 (* By: Thomas Brittain <thomas@pamexx.com> *)
 (* Clean the bitcoin historical price dataset into an R ready format *)
 
-(* NOTE: When running in toplevel, make sure to #include "csv";; *)
+(* NOTE: When running in toplevel, make sure to #require "csv";; *)
 
 let in_file = "/home/alpha/Bitcoin Data/BTC_Bitstamp.csv" in
 let out_file = "/home/alpha/Bitcoin Data/BTC_Bitstamp_clean.csv" in
