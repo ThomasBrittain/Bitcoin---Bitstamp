@@ -1,7 +1,14 @@
 (* By: Thomas Brittain <thomas@pamexx.com> *)
 (* Clean the bitcoin historical price dataset into an R ready format *)
 
-(* NOTE: When running in toplevel, make sure to #require "csv";; *)
+#require "csv"
+
+(* TODO: make keep_year a list so that multiple years can be selected *)
+(* TODO: also create a keep_month list *)
+
+(* Keep data from which year *)
+let keep_year = "2013" in
+let keep_month = "01" in
 
 let in_file = "/home/alpha/Bitcoin Data/BTC_Bitstamp.csv" in
 let out_file = "/home/alpha/Bitcoin Data/BTC_Bitstamp_clean.csv" in
@@ -48,18 +55,26 @@ let write_line (sl : string list) =
     let close_price = List.nth sl 7 in
     let volume = List.nth sl 8 in 
 
-    (year^"-"^month^"-"^day^","^
-     hour^":"^minute^","^
-     open_price^","^
-     high_price^","^
-     low_price^","^
-     close_price^","^
-     volume^"\n")
+    if (year = keep_year && month = keep_month) then 
+
+      (
+       year^"-"^month^"-"^day^","^
+       hour^":"^minute^","^
+       open_price^","^
+       high_price^","^
+       low_price^","^
+       close_price^","^
+       volume^"\n"
+      )
+    else ""
   in
     (* Write the new line to the output file *)
-    output_string oc new_string;
-    flush oc;
-    (*print_string new_string;*)
+  if not (new_string = "") then  
+    (
+      output_string oc new_string;
+      flush oc;
+      (*print_string new_string;*) (* for testing *)
+    )
 in
 
 (* Write the headers to the file *)
@@ -70,3 +85,6 @@ Csv.iter write_line csv_ic;
 
 (* Close the CSV in_channel -- the underlying channel is close as well *)
 Csv.close_in csv_ic;
+
+(* Close the out_channel *)
+close_out oc;
